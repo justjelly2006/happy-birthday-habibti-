@@ -173,30 +173,27 @@ body[data-p="4"] .st{opacity:1}@keyframes tw{50%{opacity:.15}}
 
 <script>
 /* ================= EDIT ME: ALL PHOTOS & TEXT LIVE HERE =================
-   1. Put your photos in an "images" folder next to index.html.
+   1. Put your photos in the same folder as index.html (names must match below).
    2. Resize each to ~1200px on the long side, JPG quality ~80 (keeps it fast on phones).
    3. Replace the file names below. Photos are never cropped or altered —
       they show at their natural proportions. Missing files show a dashed
       placeholder with the path you need to fill. */
 const CFG={
  music:'music/love-songs.mp3',   // add your own legally obtained copy of "Love Songs" – Kaash Paige here
- childhood:[                    // ← CHILDHOOD PICTURES (path, caption)
+ childhood:[                    // CHILDHOOD PICTURES (file name, caption). Names must match your files EXACTLY (case-sensitive on GitHub Pages)
   ['images child - 1.jpg','Even then, you had that light.'],
   ['images child - 2.jpg','Small hands, big curiosity.'],
   ['images child - 3.jpg','I would know that smile anywhere.'],
-  ['images child - 4.jpg','Somewhere in there was already the girl I would fall for.'],
-],
- morph:['images child - 1.jpg','images recent - 1.jpg'], // ← "then" and "now" photos for the transition
- recent:[                       // ← RECENT PICTURES (first one is shown large)
-  'images recent - 1.jpg','images recent - 2.jpg','images recent - 3.webp','images recent - 4.jpg',],
- favourite:[                    // ← HER FAVOURITE PICTURES
-  'images favourite - 1.jpg','images favourite - 2.jpg','images favourite - 3.jpg','images favourite - 4.jpg'],
+  ['images child - 4.jpg','Somewhere in there was already the girl I would fall for.']],
+ morph:['images child - 1.jpg','images recent - 1.jpg'], // "then" and "now" photos for the transition
+ recent:['images recent - 1.jpg','images recent - 2.jpg','images recent - 3.webp','images recent - 4.jpg'], // RECENT PICTURES (first is shown large)
+ favourite:['images favourite - 1.jpg','images favourite - 2.jpg','images favourite - 3.jpg','images favourite - 4.jpg'], // HER FAVOURITE PICTURES
  compliments:['Your smile quietly fixes my whole day.','You are softer and stronger than you know.','Your laugh is my favourite sound in any time zone.','You make ordinary moments feel golden.','Distance never once made you feel far.','Being loved by you is the best thing that happened to me.'],
- letter:`My love,\n\nHappy birthday.\n\nI wish I could be there to see your face as you read this, to hold you and say it all out loud. Since I can't, I built you this little world instead.\n\nEvery version of you, the little girl, the woman you are today and the one you are still becoming, is someone I adore. You make my days softer and my future brighter.\n\nThe miles are only distance. You are always close.\n\nHappy birthday, my favourite person.\nI love you.\n\nForever your,\nHABIBI`  // ← EDIT THE LETTER
+ letter:`My love,\n\nHappy birthday.\n\nI wish I could be there to see your face as you read this, to hold you and say it all out loud. Since I can't, I built you this little world instead.\n\nEvery version of you, the little girl, the woman you are today and the one you are still becoming, is someone I adore. You make my days softer and my future brighter.\n\nThe miles are only distance. You are always close.\n\nHappy birthday, my favourite person.\nI love you.\n\nForever yours,\nHABIBI`  // ← EDIT THE LETTER
 };
 /* ====================================================================== */
 const $=id=>document.getElementById(id),P=[...document.querySelectorAll('.page')];
-function I(src,alt=''){const m=new Image();m.src=src;m.alt=alt;m.loading='lazy';m.decoding='async';
+function I(src,alt=''){const m=new Image();m.src=encodeURI(src);m.alt=alt;m.loading='lazy';m.decoding='async';
  m.onerror=()=>{const d=document.createElement('div');d.className='ph';d.textContent='Add photo: '+src;m.replaceWith(d)};return m}
 // childhood polaroids
 CFG.childhood.forEach(([s,c],i)=>{const f=document.createElement('figure');f.className='pol';f.style.cssText=`--i:${i};--r:${i%2?2.5:-2.5}deg`;f.append(I(s,c));const t=document.createElement('figcaption');t.textContent=c;f.append(t);$('kids').append(f)});
@@ -206,7 +203,7 @@ const setM=v=>{$('sl').value=v;mo.style.setProperty('--o',v/100)};$('sl').oninpu
 function playMorph(){let t0=null;const f=t=>{t0=t0||t;const k=Math.min((t-t0-1200)/5000,1);if(k>=0)setM(k*100);if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 // galleries + lightbox
 const lbEl=$('lb'),lbImg=lbEl.querySelector('img');let lbI=0;
-function lb(i){lbI=(i+CFG.recent.length)%CFG.recent.length;lbImg.src=CFG.recent[lbI];lbEl.classList.add('on')}
+function lb(i){lbI=(i+CFG.recent.length)%CFG.recent.length;lbImg.src=encodeURI(CFG.recent[lbI]);lbEl.classList.add('on')}
 function gallery(el,list,click){list.forEach((s,i)=>{const f=document.createElement('figure');f.append(I(s));if(click)f.onclick=()=>lb(i);el.append(f)})}
 gallery($('now'),CFG.recent,1);gallery($('fav'),CFG.favourite,0);
 lbEl.querySelector('.x').onclick=()=>lbEl.classList.remove('on');lbEl.querySelector('.p').onclick=()=>lb(lbI-1);lbEl.querySelector('.n').onclick=()=>lb(lbI+1);
@@ -222,4 +219,4 @@ for(let i=0;i<70;i++){const s=document.createElement('i');s.className='st';s.sty
 for(let i=0;i<5;i++){const c=document.createElement('div');c.className='cd';c.style.left=(38+i*28)+'px';c.innerHTML='<div class="flame"></div>';$('cds').append(c)}
 let blown=false;
 $('blow').onclick=()=>{
- if(blown){blown=false;document.querySelectorAll('.flame').forEach(f=>f.classList.remove('out'));$('wish').classList.remove('show');$('blow').textConten
+ if(blown){blown=false;document.querySelectorAll('.flame').forEach(f=>f.classList.remove('out'));$(
